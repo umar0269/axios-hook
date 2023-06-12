@@ -10,6 +10,9 @@ api.interceptors.request.use(
 		// your auth token is configured here
 		//config.headers.Authorization = `Bearer token`;
 
+		// weather api need this headers
+		// if you want to use this api, you need to create an account and get your own api key
+		// else you can remove this headers
 		config.headers['X-RapidAPI-Key'] = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
 		config.headers['X-RapidAPI-Host'] = 'weatherbit-v1-mashape.p.rapidapi.com';
 
@@ -22,7 +25,7 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
 	(response: AxiosResponse) => {
-		return response?.data || response;
+		return response?.data;
 	},
 	(error) => {
 		const errorMessage = error.response?.data?.error?.errorMessage || error.message;
@@ -38,9 +41,9 @@ export const useAxios = (baseURL = BASE_URL) => {
 		setIsLoading(true);
 		return request()
 			.then((data: Record<string, any> | Record<string, any>[]) => {
-				// show snackbar notification here in case of success
-				// if (notificationSuccess) {
-				// }
+				if (msg) {
+					// show snackbar notification here in case of success and msg is not empty
+				}
 
 				return data;
 			})
